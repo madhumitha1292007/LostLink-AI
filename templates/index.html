@@ -8,727 +8,37 @@
 
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top left, #4338ca 0%, transparent 35%),
-                radial-gradient(circle at bottom right, #7c3aed 0%, transparent 35%),
-                linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
-
-            color: #ffffff;
-            padding-bottom: 50px;
-        }
-
-        /* ================= HEADER ================= */
-
-        header {
-            text-align: center;
-            padding: 45px 20px 30px;
-        }
-
-        .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        header h1 {
-            font-size: 38px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        header p {
-            margin-top: 10px;
-            font-size: 17px;
-            color: #cbd5e1;
-        }
-
-        .ai-badge {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 8px 18px;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            color: #ddd6fe;
-            font-size: 14px;
-        }
-
-        /* ================= MAIN ================= */
-
-        .container {
-            width: 92%;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        /* ================= FORM CARD ================= */
-
-        .card {
-            background: rgba(255,255,255,0.96);
-            color: #1e293b;
-
-            border-radius: 24px;
-            padding: 35px;
-
-            box-shadow:
-                0 25px 60px rgba(0,0,0,0.35);
-
-            margin-bottom: 35px;
-        }
-
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            margin-bottom: 28px;
-        }
-
-        .card-title .icon {
-            width: 45px;
-            height: 45px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 14px;
-
-            background: linear-gradient(
-                135deg,
-                #6366f1,
-                #8b5cf6
-            );
-
-            color: white;
-            font-size: 22px;
-        }
-
-        .card-title h2 {
-            font-size: 25px;
-        }
-
-        .card-title p {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 3px;
-        }
-
-        /* ================= FORM ================= */
-
-        .form-group {
-            margin-bottom: 22px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-
-            font-weight: 700;
-            color: #334155;
-            font-size: 14px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-
-            padding: 14px 16px;
-
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-
-            background: #f8fafc;
-            color: #1e293b;
-
-            font-size: 15px;
-
-            outline: none;
-
-            transition: 0.25s;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #6366f1;
-            background: #ffffff;
-
-            box-shadow:
-                0 0 0 4px rgba(99,102,241,0.12);
-        }
-
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        /* ================= FILE UPLOAD ================= */
-
-        .upload-box {
-            border: 2px dashed #c4b5fd;
-            border-radius: 15px;
-
-            padding: 22px;
-
-            background: #f5f3ff;
-
-            text-align: center;
-
-            transition: 0.25s;
-        }
-
-        .upload-box:hover {
-            border-color: #6366f1;
-            background: #ede9fe;
-        }
-
-        .upload-icon {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .upload-box p {
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        input[type="file"] {
-            border: none;
-            background: white;
-            padding: 10px;
-        }
-
-        /* ================= SUBMIT BUTTON ================= */
-
-        .submit-btn {
-            width: 100%;
-
-            border: none;
-            border-radius: 14px;
-
-            padding: 16px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #4f46e5,
-                    #7c3aed
-                );
-
-            color: white;
-
-            font-size: 16px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 10px 25px rgba(79,70,229,0.3);
-
-            transition: 0.25s;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 15px 30px rgba(79,70,229,0.4);
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* ================= ITEMS ================= */
-
-        .items-section {
-            margin-top: 20px;
-        }
-
-        .items-title {
-            color: white;
-            font-size: 25px;
-            margin-bottom: 20px;
-        }
-
-        .items-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(280px, 1fr));
-
-            gap: 20px;
-        }
-
-        .item-card {
-            background: rgba(255,255,255,0.96);
-            color: #1e293b;
-
-            border-radius: 20px;
-
-            padding: 22px;
-
-            box-shadow:
-                0 15px 35px rgba(0,0,0,0.25);
-
-            transition: 0.25s;
-        }
-
-        .item-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .item-type {
-            display: inline-block;
-
-            padding: 6px 12px;
-
-            border-radius: 20px;
-
-            background: #ede9fe;
-            color: #6d28d9;
-
-            font-size: 12px;
-            font-weight: 800;
-
-            margin-bottom: 12px;
-        }
-
-        .item-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .item-card p {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .item-info {
-            margin-top: 15px;
-
-            padding-top: 15px;
-
-            border-top: 1px solid #e2e8f0;
-
-            font-size: 13px;
-            color: #475569;
-        }
-
-        /* ================= EMPTY STATE ================= */
-
-        .empty {
-            text-align: center;
-
-            padding: 35px;
-
-            background: rgba(255,255,255,0.1);
-
-            border-radius: 20px;
-
-            color: #cbd5e1;
-
-            border: 1px solid rgba(255,255,255,0.15);
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            text-align: center;
-
-            margin-top: 45px;
-
-            color: #94a3b8;
-
-            font-size: 13px;
-        }
-
-        footer strong {
-            color: #c4b5fd;
-        }
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 600px) {
-
-            header {
-                padding-top: 30px;
-            }
-
-            header h1 {
-                font-size: 28px;
-            }
-
-            header p {
-                font-size: 14px;
-            }
-
-            .card {
-                padding: 22px;
-                border-radius: 18px;
-            }
-
-            .card-title h2 {
-                font-size: 21px;
-            }
-
-            .logo {
-                font-size: 40px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- ================= HEADER ================= -->
-
-    <header>
-
-        <div class="logo">🔎</div>
-
-        <h1>LostLink AI</h1>
-
-        <p>
-            Intelligent Lost & Found Matching System
-        </p>
-
-        <div class="ai-badge">
-            🤖 AI-Powered Matching • Campus Lost & Found
-        </div>
-
-    </header>
-
-
-    <!-- ================= MAIN ================= -->
-
-    <div class="container">
-
-
-        <!-- ================= REPORT FORM ================= -->
-
-        <div class="card">
-
-            <div class="card-title">
-
-                <div class="icon">
-                    📦
-                </div>
-
-                <div>
-                    <h2>Report Lost / Found Item</h2>
-
-                    <p>
-                        Help reconnect lost items with their owners
-                    </p>
-                </div>
-
-            </div>
-
-
-            <form
-                action="/report"
-                method="POST"
-                enctype="multipart/form-data"
-            >
-
-                <!-- ITEM TYPE -->
-
-                <div class="form-group">
-
-                    <label for="item_type">
-                        Item Type
-                    </label>
-
-                    <select
-                        id="item_type"
-                        name="item_type"
-                        required
-                    >
-
-                        <option value="">
-                            Select Lost or Found
-                        </option>
-
-                        <option value="Lost">
-                            🔴 I Lost an Item
-                        </option>
-
-                        <option value="Found">
-                            🟢 I Found an Item
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- ITEM NAME -->
-
-                <div class="form-group">
-
-                    <label for="item_name">
-                        Item Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="item_name"
-                        name="item_name"
-                        placeholder="Example: Black Wallet"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- DESCRIPTION -->
-
-                <div class="form-group">
-
-                    <label for="description">
-                        Description
-                    </label>
-
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="Describe the item, color, brand, unique marks, etc..."
-                        required
-                    ></textarea>
-
-                </div>
-
-
-                <!-- IMAGE -->
-
-                <div class="form-group">
-
-                    <label>
-                        📷 Upload Item Photo
-                    </label>
-
-                    <div class="upload-box">
-
-                        <div class="upload-icon">
-                            📸
-                        </div>
-
-                        <p>
-                            Upload a clear photo of the lost/found item
-                        </p>
-
-                        <input
-                            type="file"
-                            name="image"
-                            accept="image/*"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <!-- LOCATION -->
-
-                <div class="form-group">
-
-                    <label for="location">
-                        📍 Location
-                    </label>
-
-                    <input
-                        type="text"
-                        id="location"
-                        name="location"
-                        placeholder="Example: Auditorium / Library / Canteen"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- CONTACT -->
-
-                <div class="form-group">
-
-                    <label for="contact">
-                        📞 Contact
-                    </label>
-
-                    <input
-                        type="text"
-                        id="contact"
-                        name="contact"
-                        placeholder="Phone / Email"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- SUBMIT -->
-
-                <button
-                    type="submit"
-                    class="submit-btn"
-                >
-
-                    🚀 Submit Report
-
-                </button>
-
-            </form>
-
-        </div>
-
-
-        <!-- ================= REPORTED ITEMS ================= -->
-
-        <div class="items-section">
-
-            <h2 class="items-title">
-                📋 Recent Reports
-            </h2>
-
-
-            {% if items %}
-
-                <div class="items-grid">
-
-                    {% for item in items %}
-
-                        <div class="item-card">
-
-                            <span class="item-type">
-
-                                {% if item[1] == "Lost" %}
-                                    🔴 LOST
-                                {% else %}
-                                    🟢 FOUND
-                                {% endif %}
-
-                            </span>
-
-
-                            <h3>
-                                {{ item[2] }}
-                            </h3>
-
-
-                            <p>
-                                {{ item[3] }}
-                            </p>
-
-
-                            <div class="item-info">
-
-                                📍 {{ item[4] }}
-
-                                <br><br>
-
-                                📞 {{ item[5] }}
-
-                            </div>
-
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-            {% else %}
-
-                <div class="empty">
-
-                    <div style="font-size:40px;">
-                        🔍
-                    </div>
-
-                    <p>
-                        No reports yet.
-                        Be the first to report a lost or found item!
-                    </p>
-
-                </div>
-
-            {% endif %}
-
-        </div>
-
-
-    </div>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer>
-
-        Built with ❤️ for smarter campus communities
-
-        <br>
-
-        <strong>LostLink AI</strong> • Intelligent Lost & Found
-
-    </footer>
-
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>LostLink AI | Intelligent Lost & Found</title>
-
-    <style>
-        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-
-        body {
             font-family: Arial, sans-serif;
-            background: #07164d;
-            color: #1f2937;
         }
 
-        /* HERO */
+        body {
+            background: #071a5c;
+            color: #222;
+        }
+
         .hero {
-            background: linear-gradient(135deg, #0926a8, #1d4ed8);
+            background: linear-gradient(135deg, #071a5c, #123bd6);
             color: white;
             text-align: center;
-            padding: 55px 20px 70px;
+            padding: 55px 20px 45px;
         }
 
         .hero-icon {
-            font-size: 50px;
+            font-size: 55px;
             margin-bottom: 10px;
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 48px;
             margin-bottom: 12px;
         }
 
         .hero p {
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: 20px;
+            margin-bottom: 22px;
         }
 
         .badge {
@@ -737,80 +47,62 @@
             border: 1px solid rgba(255,255,255,0.3);
             padding: 12px 22px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 16px;
         }
 
-        /* MAIN */
         .container {
+            width: 92%;
             max-width: 1100px;
-            margin: -35px auto 50px;
-            padding: 0 20px;
+            margin: 35px auto;
         }
 
-        /* FORM CARD */
-        .form-card {
+        .report-section {
             background: white;
-            border-radius: 22px;
             padding: 35px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
         }
 
-        .form-title {
+        .section-title {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            font-size: 28px;
+            color: #123bd6;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            color: #777;
             margin-bottom: 28px;
         }
 
-        .form-icon {
-            width: 50px;
-            height: 50px;
-            background: #dbeafe;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-        }
-
-        .form-title h2 {
-            color: #173b9e;
-            font-size: 26px;
-        }
-
-        .form-title p {
-            color: #94a3b8;
-            margin-top: 5px;
-        }
-
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 9px;
-            color: #334155;
+            color: #333;
         }
 
         input,
-        select,
-        textarea {
+        textarea,
+        select {
             width: 100%;
-            padding: 14px 15px;
-            border: 1px solid #dbe2ea;
-            border-radius: 10px;
-            font-size: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
             outline: none;
-            background: #f8fafc;
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #2563eb;
-            background: white;
+        textarea:focus,
+        select:focus {
+            border-color: #123bd6;
         }
 
         textarea {
@@ -819,36 +111,35 @@
         }
 
         input[type="file"] {
-            background: white;
+            background: #f7f8ff;
             padding: 12px;
         }
 
         .submit-btn {
             width: 100%;
             border: none;
-            padding: 16px;
-            border-radius: 12px;
-            background: linear-gradient(90deg, #155eef, #2563eb);
+            background: linear-gradient(90deg, #123bd6, #3158ff);
             color: white;
-            font-size: 17px;
+            padding: 17px;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
         }
 
         .submit-btn:hover {
-            background: #124dcc;
+            opacity: 0.9;
         }
 
-        /* RECENT REPORTS */
         .reports-section {
-            margin-top: 45px;
+            margin-top: 35px;
+            background: #071a5c;
         }
 
         .reports-title {
             color: white;
-            font-size: 28px;
-            margin-bottom: 22px;
+            font-size: 30px;
+            margin-bottom: 25px;
         }
 
         .items-grid {
@@ -859,92 +150,89 @@
 
         .item-card {
             background: white;
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
         }
 
         .item-type {
             display: inline-block;
-            padding: 7px 13px;
+            padding: 7px 14px;
             border-radius: 20px;
-            font-size: 13px;
             font-weight: bold;
+            font-size: 13px;
             margin-bottom: 15px;
         }
 
         .lost {
-            background: #ffe4e6;
-            color: #be123c;
+            background: #ffe4eb;
+            color: #d4145a;
         }
 
         .found {
-            background: #dcfce7;
-            color: #15803d;
+            background: #ddf8ec;
+            color: #087f4f;
         }
 
         .item-card h3 {
             font-size: 22px;
-            margin-bottom: 8px;
-            color: #172554;
+            margin-bottom: 10px;
+            color: #222;
         }
 
         .description {
-            color: #64748b;
+            color: #777;
             margin-bottom: 18px;
+            line-height: 1.5;
         }
 
         .details {
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #eee;
             padding-top: 15px;
-            color: #475569;
-            line-height: 1.9;
-            font-size: 14px;
         }
 
-        /* AI MATCH BUTTON */
+        .detail {
+            margin: 9px 0;
+            color: #555;
+        }
+
         .match-btn {
             display: block;
             width: 100%;
-            margin-top: 18px;
-            padding: 13px;
-            background: linear-gradient(90deg, #2563eb, #4f46e5);
-            color: white;
             text-align: center;
             text-decoration: none;
+            margin-top: 18px;
+            padding: 13px;
             border-radius: 10px;
+            background: #111;
+            color: white;
             font-weight: bold;
-            font-size: 15px;
+            transition: 0.2s;
         }
 
         .match-btn:hover {
-            background: #1d4ed8;
+            background: #123bd6;
         }
 
         .no-items {
             background: white;
+            padding: 30px;
             border-radius: 15px;
-            padding: 25px;
             text-align: center;
-            color: #64748b;
+            color: #777;
         }
 
-        /* MOBILE */
         @media (max-width: 600px) {
             .hero h1 {
-                font-size: 32px;
+                font-size: 35px;
             }
 
             .hero p {
-                font-size: 15px;
+                font-size: 16px;
             }
 
-            .form-card {
+            .report-section {
                 padding: 22px;
-            }
-
-            .reports-title {
-                font-size: 24px;
             }
         }
     </style>
@@ -954,176 +242,111 @@
 
     <!-- HERO -->
     <section class="hero">
-
-        <div class="hero-icon">
-            🔎
-        </div>
+        <div class="hero-icon">🔎</div>
 
         <h1>LostLink AI</h1>
 
-        <p>
-            Intelligent Lost &amp; Found Matching System
-        </p>
+        <p>Intelligent Lost & Found Matching System</p>
 
         <div class="badge">
-            🤖 AI-Powered Matching • Campus Lost &amp; Found
+            🤖 AI-Powered Matching • Campus Lost & Found
         </div>
-
     </section>
 
 
     <!-- MAIN -->
-    <main class="container">
+    <div class="container">
 
         <!-- REPORT FORM -->
-        <section class="form-card">
+        <section class="report-section">
 
-            <div class="form-title">
+            <h2 class="section-title">
+                📦 Report Lost / Found Item
+            </h2>
 
-                <div class="form-icon">
-                    📦
-                </div>
+            <p class="section-subtitle">
+                Help reconnect lost items with their owners
+            </p>
 
-                <div>
-                    <h2>Report Lost / Found Item</h2>
-
-                    <p>
-                        Help reconnect lost items with their owners
-                    </p>
-                </div>
-
-            </div>
-
-
-            <form
-                action="/report"
-                method="POST"
-                enctype="multipart/form-data"
-            >
+            <form action="/report" method="POST" enctype="multipart/form-data">
 
                 <!-- ITEM TYPE -->
                 <div class="form-group">
+                    <label>Item Type</label>
 
-                    <label for="item_type">
-                        Item Type
-                    </label>
-
-                    <select
-                        id="item_type"
-                        name="item_type"
-                        required
-                    >
-
-                        <option value="">
-                            Select Lost or Found
-                        </option>
-
-                        <option value="Lost">
-                            Lost
-                        </option>
-
-                        <option value="Found">
-                            Found
-                        </option>
-
+                    <select name="item_type" required>
+                        <option value="">Select Lost or Found</option>
+                        <option value="Lost">Lost</option>
+                        <option value="Found">Found</option>
                     </select>
-
                 </div>
 
 
                 <!-- ITEM NAME -->
                 <div class="form-group">
-
-                    <label for="item_name">
-                        Item Name
-                    </label>
+                    <label>Item Name</label>
 
                     <input
                         type="text"
-                        id="item_name"
                         name="item_name"
                         placeholder="Example: Black Wallet"
                         required
                     >
-
                 </div>
 
 
                 <!-- DESCRIPTION -->
                 <div class="form-group">
-
-                    <label for="description">
-                        Description
-                    </label>
+                    <label>Description</label>
 
                     <textarea
-                        id="description"
                         name="description"
                         placeholder="Describe the item, color, brand, unique marks, etc..."
                         required
                     ></textarea>
-
                 </div>
 
 
                 <!-- IMAGE -->
                 <div class="form-group">
-
-                    <label for="image">
-                        📷 Upload Item Photo
-                    </label>
+                    <label>📷 Upload Item Photo</label>
 
                     <input
                         type="file"
-                        id="image"
                         name="image"
                         accept="image/*"
                     >
-
                 </div>
 
 
                 <!-- LOCATION -->
                 <div class="form-group">
-
-                    <label for="location">
-                        📍 Location
-                    </label>
+                    <label>📍 Location</label>
 
                     <input
                         type="text"
-                        id="location"
                         name="location"
                         placeholder="Example: Main Block"
                         required
                     >
-
                 </div>
 
 
                 <!-- CONTACT -->
                 <div class="form-group">
-
-                    <label for="contact">
-                        📞 Contact
-                    </label>
+                    <label>📞 Contact</label>
 
                     <input
                         type="text"
-                        id="contact"
                         name="contact"
                         placeholder="Phone / Email"
                         required
                     >
-
                 </div>
 
 
                 <!-- SUBMIT -->
-                <button
-                    type="submit"
-                    class="submit-btn"
-                >
+                <button type="submit" class="submit-btn">
                     🚀 Submit Report
                 </button>
 
@@ -1149,17 +372,19 @@
                 <div class="item-card">
 
                     <!-- LOST / FOUND -->
-                    <span
-                        class="item-type {% if item[1] == 'Lost' %}lost{% else %}found{% endif %}"
-                    >
+                    {% if item[1] == "Lost" %}
 
-                        {% if item[1] == "Lost" %}
+                        <span class="item-type lost">
                             🔴 LOST
-                        {% else %}
-                            🟢 FOUND
-                        {% endif %}
+                        </span>
 
-                    </span>
+                    {% else %}
+
+                        <span class="item-type found">
+                            🟢 FOUND
+                        </span>
+
+                    {% endif %}
 
 
                     <!-- ITEM NAME -->
@@ -1177,11 +402,11 @@
                     <!-- DETAILS -->
                     <div class="details">
 
-                        <div>
+                        <div class="detail">
                             📍 {{ item[4] }}
                         </div>
 
-                        <div>
+                        <div class="detail">
                             📞 {{ item[5] }}
                         </div>
 
@@ -1205,14 +430,14 @@
             {% else %}
 
             <div class="no-items">
-                No reports yet. Add the first Lost or Found item!
+                No reports yet. Be the first to report an item!
             </div>
 
             {% endif %}
 
         </section>
 
-    </main>
+    </div>
 
 </body>
 </html>
