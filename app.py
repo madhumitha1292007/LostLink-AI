@@ -12,10 +12,9 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-# ---------------- DATABASE ----------------
+# ================= DATABASE =================
 
 def init_db():
-
     conn = sqlite3.connect("lostlink.db")
 
     conn.execute("""
@@ -36,20 +35,25 @@ def init_db():
 
     column_names = [column[1] for column in columns]
 
-    # Add image column if it doesn't already exist
+    # Add image column if missing
     if "image" not in column_names:
         conn.execute(
             "ALTER TABLE items ADD COLUMN image TEXT"
+        )
+
+    # Add delete PIN column if missing
+    if "delete_pin" not in column_names:
+        conn.execute(
+            "ALTER TABLE items ADD COLUMN delete_pin TEXT"
         )
 
     conn.commit()
     conn.close()
 
 
-# ---------------- AI TEXT MATCHING ----------------
+# ================= AI MATCHING =================
 
 def similarity(text1, text2):
-
     return SequenceMatcher(
         None,
         str(text1).lower().strip(),
@@ -59,16 +63,19 @@ def similarity(text1, text2):
 
 def calculate_match(item1, item2):
 
+    # Item name = 50%
     name_score = similarity(
         item1[2],
         item2[2]
     )
 
+    # Description = 30%
     description_score = similarity(
         item1[3],
         item2[3]
     )
 
+    # Location = 20%
     location_score = similarity(
         item1[4],
         item2[4]
@@ -83,7 +90,7 @@ def calculate_match(item1, item2):
     return round(final_score * 100)
 
 
-# ---------------- HOME ----------------
+# ================= HOME PAGE =================
 
 @app.route("/")
 def home():
@@ -103,7 +110,7 @@ def home():
     )
 
 
-# ---------------- REPORT ----------------
+# ================= REPORT ITEM =================
 
 @app.route("/report", methods=["POST"])
 def report():
@@ -114,6 +121,10 @@ def report():
     location = request.form["location"]
     contact = request.form["contact"]
 
+    # Delete PIN
+    delete_pin = request.form["delete_pin"]
+
+    # Image upload
     image_file = request.files.get("image")
 
     image_name = ""
@@ -131,6 +142,7 @@ def report():
             )
         )
 
+    # Save to database
     conn = sqlite3.connect("lostlink.db")
 
     conn.execute("""
@@ -141,16 +153,18 @@ def report():
             description,
             location,
             contact,
-            image
+            image,
+            delete_pin
         )
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (
         item_type,
         item_name,
         description,
         location,
         contact,
-        image_name
+        image_name,
+        delete_pin
     ))
 
     conn.commit()
@@ -159,18 +173,20 @@ def report():
     return redirect("/")
 
 
-# ---------------- AI MATCH ----------------
+# ================= AI MATCH =================
 
 @app.route("/match/<int:item_id>")
 def match(item_id):
 
     conn = sqlite3.connect("lostlink.db")
 
+    # Current item
     current = conn.execute("""
         SELECT * FROM items
         WHERE id = ?
     """, (item_id,)).fetchone()
 
+    # Other items
     all_items = conn.execute("""
         SELECT * FROM items
         WHERE id != ?
@@ -185,11 +201,11 @@ def match(item_id):
 
     for item in all_items:
 
-        # Lost → Found
+        # Lost item should match Found item
         if current[1] == "Lost" and item[1] != "Found":
             continue
 
-        # Found → Lost
+        # Found item should match Lost item
         if current[1] == "Found" and item[1] != "Lost":
             continue
 
@@ -198,11 +214,13 @@ def match(item_id):
             item
         )
 
+        # Only show matches above 30%
         if score >= 30:
             matches.append(
                 (item, score)
             )
 
+    # Highest score first
     matches.sort(
         key=lambda x: x[1],
         reverse=True
@@ -215,11 +233,83 @@ def match(item_id):
     )
 
 
-# ---------------- START ----------------
+# ================= DELETE REPORT =================
+
+@app.route("/delete/<int:item_id>", methods=["POST"])
+def delete_item(item_id):
+
+    # PIN entered by user
+    pin = request.form["delete_pin"]
+
+    conn = sqlite3.connect("lostlink.db")
+
+    # Get stored PIN + image
+    item = conn.execute("""
+        SELECT delete_pin, image
+        FROM items
+        WHERE id = ?
+    """, (item_id,)).fetchone()
+
+    # Report doesn't exist
+    if item is None:
+
+        conn.close()
+
+        return "Report not found"
+
+
+    stored_pin = item[0]
+    image_name = item[1]
+
+
+    # Check PIN
+    if stored_pin != pin:
+
+        conn.close()
+
+        return """
+        <h2>❌ Wrong Delete PIN</h2>
+        <p>Please enter the PIN you created while reporting this item.</p>
+        <a href="/">Go Back</a>
+        """
+
+
+    # Delete database record
+    conn.execute("""
+        DELETE FROM items
+        WHERE id = ?
+    """, (item_id,))
+
+    conn.commit()
+    conn.close()
+
+
+    # Delete uploaded image also
+    if image_name:
+
+        image_path = os.path.join(
+            app.config["UPLOAD_FOLDER"],
+            image_name
+        )
+
+        if os.path.exists(image_path):
+
+            try:
+                os.remove(image_path)
+            except:
+                pass
+
+
+    return redirect("/")
+
+
+# ================= START APP =================
+
+# Initialize database when app starts
+init_db()
+
 
 if __name__ == "__main__":
-
-    init_db()
 
     app.run(
         debug=True,
