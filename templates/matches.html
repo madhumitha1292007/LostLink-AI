@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LostLink AI - Match Results</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #182848;
+        }
+
+        header {
+            background: #182848;
+            color: white;
+            text-align: center;
+            padding: 28px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .current-card,
+        .match-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .current-card h2,
+        .match-card h2 {
+            margin-top: 0;
+        }
+
+        .photos {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .photo-box {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+
+        .photo-box img {
+            width: 100%;
+            max-width: 300px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 14px;
+        }
+
+        .no-image {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef1f7;
+            border-radius: 14px;
+            color: #777;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .score {
+            font-size: 30px;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: #e8f5e9;
+        }
+
+        .factor {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px;
+            margin: 8px 0;
+            background: #f7f9fc;
+            border-radius: 9px;
+        }
+
+        .success {
+            color: #188038;
+            font-weight: bold;
+        }
+
+        .contact {
+            background: #eef4ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .back {
+            display: inline-block;
+            background: #182848;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 9px;
+            text-decoration: none;
+            margin-bottom: 25px;
+        }
+
+        .no-match {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🤖 LostLink AI</h1>
+    <p>Intelligent Lost & Found Matching</p>
+</header>
+
+<div class="container">
+
+    <a class="back" href="/">
+        ← Back to Reports
+    </a>
+
+    <div class="current-card">
+
+        <h2>🔍 Searching Matches For</h2>
+
+        <h3>{{ current[2] }}</h3>
+
+        <p>
+            <b>Description:</b>
+            {{ current[3] }}
+        </p>
+
+        <p>
+            <b>📍 Location:</b>
+            {{ current[4] }}
+        </p>
+
+        {% if current[6] %}
+
+        <img
+            src="/static/uploads/{{ current[6] }}"
+            style="
+                width:200px;
+                height:150px;
+                object-fit:cover;
+                border-radius:12px;
+            "
+        >
+
+        {% endif %}
+
+    </div>
+
+
+    {% if matches %}
+
+        <h2>🎯 AI Possible Matches</h2>
+
+        {% for item, score in matches %}
+
+        <div class="match-card">
+
+            <div class="match-header">
+
+                <div>
+                    <h2>🤖 Possible Match Found</h2>
+
+                    <h3>{{ item[2] }}</h3>
+                </div>
+
+                <div class="score">
+                    {{ score }}%
+                </div>
+
+            </div>
+
+
+            <div class="photos">
+
+                <div class="photo-box">
+
+                    <h3>🔴 Current Item</h3>
+
+                    {% if current[6] %}
+
+                    <img
+                        src="/static/uploads/{{ current[6] }}"
+                    >
+
+                    {% else %}
+
+                    <div class="no-image">
+                        No Image
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="photo-box">
+
+                    <h3>🟢 Possible Found Item</h3>
+
+                    {% if item[6] %}
+
+                    <img
+                        src="/static/uploads/{{ item[6] }}"
+                    >
+
+                    {% else %}
+
+                    <div class="no-image">
+                        No Image
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <h3>🧠 AI Matching Factors</h3>
+
+            <div class="factor">
+                <span>Item Name</span>
+                <span class="success">✓ Compared</span>
+            </div>
+
+            <div class="factor">
+                <span>Description</span>
+                <span class="success">✓ Compared</span>
+            </div>
+
+            <div class="factor">
+                <span>Location</span>
+                <span class="success">✓ Compared</span>
+            </div>
+
+
+            <h3>📋 Found Item Details</h3>
+
+            <p>
+                <b>Description:</b>
+                {{ item[3] }}
+            </p>
+
+            <p>
+                <b>📍 Location:</b>
+                {{ item[4] }}
+            </p>
+
+
+            <div class="contact">
+
+                <b>📞 Contact Owner / Finder</b>
+
+                <p>
+                    {{ item[5] }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="no-match">
+
+            <h2>🔎 No Strong Match Found</h2>
+
+            <p>
+                LostLink AI could not find a sufficiently similar
+                Lost/Found report.
+            </p>
+
+            <p>
+                Try adding a more detailed description or another report.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

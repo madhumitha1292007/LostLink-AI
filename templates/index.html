@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>LostLink AI</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #182848;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button, .match-btn {
+            background: #182848;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .match-btn {
+            background: #2878d0;
+            margin-top: 10px;
+        }
+
+        .item {
+            border-left: 5px solid #182848;
+            padding: 15px;
+            margin-top: 15px;
+            background: #f8f9fc;
+            border-radius: 8px;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            background: #e8eefc;
+            color: #182848;
+            font-size: 13px;
+        }
+
+        .preview {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🔎 LostLink AI</h1>
+
+    <p>
+        Intelligent Lost & Found Matching System
+    </p>
+
+</header>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>📦 Report Lost / Found Item</h2>
+
+        <form
+            action="/report"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <label>Item Type</label>
+
+            <select name="item_type" required>
+
+                <option value="Lost">
+                    I Lost an Item
+                </option>
+
+                <option value="Found">
+                    I Found an Item
+                </option>
+
+            </select>
+
+
+            <label>Item Name</label>
+
+            <input
+                type="text"
+                name="item_name"
+                placeholder="Example: Black Wallet"
+                required
+            >
+
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                placeholder="Describe the item..."
+                required
+            ></textarea>
+
+
+            <label>📸 Upload Item Photo</label>
+
+            <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onchange="previewImage(event)"
+            >
+
+            <img
+                id="preview"
+                class="preview"
+            >
+
+
+            <label>📍 Location</label>
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Example: Auditorium"
+                required
+            >
+
+
+            <label>📞 Contact</label>
+
+            <input
+                type="text"
+                name="contact"
+                placeholder="Phone / Email"
+                required
+            >
+
+
+            <button type="submit">
+                🚀 Submit Report
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📋 Recent Reports</h2>
+
+        {% if items %}
+
+            {% for item in items %}
+
+            <div class="item">
+
+                <span class="badge">
+                    {{ item[1] }}
+                </span>
+
+                <h3>
+                    {{ item[2] }}
+                </h3>
+
+                {% if item[6] %}
+
+                    <img
+                        src="/static/uploads/{{ item[6] }}"
+                        width="150"
+                        style="border-radius:10px;"
+                    >
+
+                {% endif %}
+
+                <p>
+                    <b>Description:</b>
+                    {{ item[3] }}
+                </p>
+
+                <p>
+                    <b>📍 Location:</b>
+                    {{ item[4] }}
+                </p>
+
+                <p>
+                    <b>📞 Contact:</b>
+                    {{ item[5] }}
+                </p>
+
+                <a
+                    class="match-btn"
+                    href="/match/{{ item[0] }}"
+                >
+                    🤖 Find AI Match
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No reports yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<script>
+
+function previewImage(event) {
+
+    const image = document.getElementById("preview");
+
+    image.src = URL.createObjectURL(
+        event.target.files[0]
+    );
+
+    image.style.display = "block";
+}
+
+</script>
+
+</body>
+
+</html>
