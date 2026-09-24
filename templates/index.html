@@ -1,276 +1,690 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LostLink AI</title>
+    <title>LostLink AI | Intelligent Lost & Found</title>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
         body {
-            font-family: Arial;
-            background: #f4f7fb;
-            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #4338ca 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #7c3aed 0%, transparent 35%),
+                linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
+
+            color: #ffffff;
+            padding-bottom: 50px;
         }
+
+        /* ================= HEADER ================= */
 
         header {
-            background: #182848;
-            color: white;
-            padding: 25px;
             text-align: center;
+            padding: 45px 20px 30px;
         }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 17px;
+            color: #cbd5e1;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: #ddd6fe;
+            font-size: 14px;
+        }
+
+        /* ================= MAIN ================= */
 
         .container {
-            width: 85%;
-            max-width: 900px;
-            margin: 30px auto;
+            width: 92%;
+            max-width: 1000px;
+            margin: auto;
         }
+
+        /* ================= FORM CARD ================= */
 
         .card {
-            background: white;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.96);
+            color: #1e293b;
+
+            border-radius: 24px;
+            padding: 35px;
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.35);
+
+            margin-bottom: 35px;
         }
 
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 28px;
         }
 
-        button, .match-btn {
-            background: #182848;
+        .card-title .icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #6366f1,
+                #8b5cf6
+            );
+
             color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
+            font-size: 22px;
         }
 
-        .match-btn {
-            background: #2878d0;
-            margin-top: 10px;
+        .card-title h2 {
+            font-size: 25px;
         }
 
-        .item {
-            border-left: 5px solid #182848;
-            padding: 15px;
-            margin-top: 15px;
-            background: #f8f9fc;
-            border-radius: 8px;
+        .card-title p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 3px;
         }
 
-        .badge {
-            padding: 5px 10px;
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-weight: 700;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+
+            padding: 14px 16px;
+
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+
+            background: #f8fafc;
+            color: #1e293b;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6366f1;
+            background: #ffffff;
+
+            box-shadow:
+                0 0 0 4px rgba(99,102,241,0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* ================= FILE UPLOAD ================= */
+
+        .upload-box {
+            border: 2px dashed #c4b5fd;
             border-radius: 15px;
-            background: #e8eefc;
-            color: #182848;
+
+            padding: 22px;
+
+            background: #f5f3ff;
+
+            text-align: center;
+
+            transition: 0.25s;
+        }
+
+        .upload-box:hover {
+            border-color: #6366f1;
+            background: #ede9fe;
+        }
+
+        .upload-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .upload-box p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        input[type="file"] {
+            border: none;
+            background: white;
+            padding: 10px;
+        }
+
+        /* ================= SUBMIT BUTTON ================= */
+
+        .submit-btn {
+            width: 100%;
+
+            border: none;
+            border-radius: 14px;
+
+            padding: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(79,70,229,0.3);
+
+            transition: 0.25s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 30px rgba(79,70,229,0.4);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* ================= ITEMS ================= */
+
+        .items-section {
+            margin-top: 20px;
+        }
+
+        .items-title {
+            color: white;
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .items-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 20px;
+        }
+
+        .item-card {
+            background: rgba(255,255,255,0.96);
+            color: #1e293b;
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.25);
+
+            transition: 0.25s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-type {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #ede9fe;
+            color: #6d28d9;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+        .item-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .item-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .item-info {
+            margin-top: 15px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #e2e8f0;
+
+            font-size: 13px;
+            color: #475569;
+        }
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 35px;
+
+            background: rgba(255,255,255,0.1);
+
+            border-radius: 20px;
+
+            color: #cbd5e1;
+
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+
+            margin-top: 45px;
+
+            color: #94a3b8;
+
             font-size: 13px;
         }
 
-        .preview {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-top: 10px;
-            display: none;
+        footer strong {
+            color: #c4b5fd;
         }
 
-    </style>
+        /* ================= MOBILE ================= */
 
+        @media (max-width: 600px) {
+
+            header {
+                padding-top: 30px;
+            }
+
+            header h1 {
+                font-size: 28px;
+            }
+
+            header p {
+                font-size: 14px;
+            }
+
+            .card {
+                padding: 22px;
+                border-radius: 18px;
+            }
+
+            .card-title h2 {
+                font-size: 21px;
+            }
+
+            .logo {
+                font-size: 40px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
+    <!-- ================= HEADER ================= -->
 
-    <h1>🔎 LostLink AI</h1>
+    <header>
 
-    <p>
-        Intelligent Lost & Found Matching System
-    </p>
+        <div class="logo">🔎</div>
 
-</header>
+        <h1>LostLink AI</h1>
 
+        <p>
+            Intelligent Lost & Found Matching System
+        </p>
 
-<div class="container">
+        <div class="ai-badge">
+            🤖 AI-Powered Matching • Campus Lost & Found
+        </div>
 
-    <div class="card">
-
-        <h2>📦 Report Lost / Found Item</h2>
-
-        <form
-            action="/report"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-
-            <label>Item Type</label>
-
-            <select name="item_type" required>
-
-                <option value="Lost">
-                    I Lost an Item
-                </option>
-
-                <option value="Found">
-                    I Found an Item
-                </option>
-
-            </select>
+    </header>
 
 
-            <label>Item Name</label>
+    <!-- ================= MAIN ================= -->
 
-            <input
-                type="text"
-                name="item_name"
-                placeholder="Example: Black Wallet"
-                required
-            >
+    <div class="container">
 
 
-            <label>Description</label>
+        <!-- ================= REPORT FORM ================= -->
 
-            <textarea
-                name="description"
-                placeholder="Describe the item..."
-                required
-            ></textarea>
+        <div class="card">
 
+            <div class="card-title">
 
-            <label>📸 Upload Item Photo</label>
+                <div class="icon">
+                    📦
+                </div>
 
-            <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onchange="previewImage(event)"
-            >
+                <div>
+                    <h2>Report Lost / Found Item</h2>
 
-            <img
-                id="preview"
-                class="preview"
-            >
-
-
-            <label>📍 Location</label>
-
-            <input
-                type="text"
-                name="location"
-                placeholder="Example: Auditorium"
-                required
-            >
-
-
-            <label>📞 Contact</label>
-
-            <input
-                type="text"
-                name="contact"
-                placeholder="Phone / Email"
-                required
-            >
-
-
-            <button type="submit">
-                🚀 Submit Report
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📋 Recent Reports</h2>
-
-        {% if items %}
-
-            {% for item in items %}
-
-            <div class="item">
-
-                <span class="badge">
-                    {{ item[1] }}
-                </span>
-
-                <h3>
-                    {{ item[2] }}
-                </h3>
-
-                {% if item[6] %}
-
-                    <img
-                        src="/static/uploads/{{ item[6] }}"
-                        width="150"
-                        style="border-radius:10px;"
-                    >
-
-                {% endif %}
-
-                <p>
-                    <b>Description:</b>
-                    {{ item[3] }}
-                </p>
-
-                <p>
-                    <b>📍 Location:</b>
-                    {{ item[4] }}
-                </p>
-
-                <p>
-                    <b>📞 Contact:</b>
-                    {{ item[5] }}
-                </p>
-
-                <a
-                    class="match-btn"
-                    href="/match/{{ item[0] }}"
-                >
-                    🤖 Find AI Match
-                </a>
+                    <p>
+                        Help reconnect lost items with their owners
+                    </p>
+                </div>
 
             </div>
 
-            {% endfor %}
 
-        {% else %}
+            <form
+                action="/report"
+                method="POST"
+                enctype="multipart/form-data"
+            >
 
-            <p>No reports yet.</p>
+                <!-- ITEM TYPE -->
 
-        {% endif %}
+                <div class="form-group">
+
+                    <label for="item_type">
+                        Item Type
+                    </label>
+
+                    <select
+                        id="item_type"
+                        name="item_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select Lost or Found
+                        </option>
+
+                        <option value="Lost">
+                            🔴 I Lost an Item
+                        </option>
+
+                        <option value="Found">
+                            🟢 I Found an Item
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ITEM NAME -->
+
+                <div class="form-group">
+
+                    <label for="item_name">
+                        Item Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="item_name"
+                        name="item_name"
+                        placeholder="Example: Black Wallet"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Describe the item, color, brand, unique marks, etc..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        📷 Upload Item Photo
+                    </label>
+
+                    <div class="upload-box">
+
+                        <div class="upload-icon">
+                            📸
+                        </div>
+
+                        <p>
+                            Upload a clear photo of the lost/found item
+                        </p>
+
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="location">
+                        📍 Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        placeholder="Example: Auditorium / Library / Canteen"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONTACT -->
+
+                <div class="form-group">
+
+                    <label for="contact">
+                        📞 Contact
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contact"
+                        name="contact"
+                        placeholder="Phone / Email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    🚀 Submit Report
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= REPORTED ITEMS ================= -->
+
+        <div class="items-section">
+
+            <h2 class="items-title">
+                📋 Recent Reports
+            </h2>
+
+
+            {% if items %}
+
+                <div class="items-grid">
+
+                    {% for item in items %}
+
+                        <div class="item-card">
+
+                            <span class="item-type">
+
+                                {% if item[1] == "Lost" %}
+                                    🔴 LOST
+                                {% else %}
+                                    🟢 FOUND
+                                {% endif %}
+
+                            </span>
+
+
+                            <h3>
+                                {{ item[2] }}
+                            </h3>
+
+
+                            <p>
+                                {{ item[3] }}
+                            </p>
+
+
+                            <div class="item-info">
+
+                                📍 {{ item[4] }}
+
+                                <br><br>
+
+                                📞 {{ item[5] }}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div style="font-size:40px;">
+                        🔍
+                    </div>
+
+                    <p>
+                        No reports yet.
+                        Be the first to report a lost or found item!
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
 
     </div>
 
-</div>
 
+    <!-- ================= FOOTER ================= -->
 
-<script>
+    <footer>
 
-function previewImage(event) {
+        Built with ❤️ for smarter campus communities
 
-    const image = document.getElementById("preview");
+        <br>
 
-    image.src = URL.createObjectURL(
-        event.target.files[0]
-    );
+        <strong>LostLink AI</strong> • Intelligent Lost & Found
 
-    image.style.display = "block";
-}
+    </footer>
 
-</script>
 
 </body>
-
 </html>
